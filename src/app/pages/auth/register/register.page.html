@@ -30,7 +30,7 @@
                 <ion-list>
               
               
-                  <ion-radio-group formControlName="documentType" value="space-between" (ionChange)="gstSelectionEvent($event)">
+                  <ion-radio-group formControlName="documentType" (ionChange)="gstSelectionEvent($event)">
                     <ion-item lines="none">
                       <ion-radio value="1" justify="space-between">I have GST</ion-radio>
                     </ion-item>
@@ -70,7 +70,7 @@
               Continue
             </ion-button>
 
-            <ion-button class="skip-button" mode="ios" fill="solid"  expand="block" color="secondary" type="submit" [disabled]="emailForm.invalid">
+            <ion-button class="skip-button" mode="ios" fill="solid"  expand="block" color="secondary" type="submit" (click)="skip()">
               Skip
             </ion-button>
           </ion-buttons>

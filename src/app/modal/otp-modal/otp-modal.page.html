@@ -12,7 +12,7 @@
     <h1>Verify your contact details!</h1>
     <p>Please enter OTP sent on +91 8007477149</p>
     <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
-    <ion-button class="verify-button" mode="ios" expand="block" color="primary" type="submit">
+    <ion-button class="verify-button" mode="ios" expand="block" color="primary" (click)="verifyOtp()">
       Verify
     </ion-button>
     <p>Resend OTP in 01:00?</p>

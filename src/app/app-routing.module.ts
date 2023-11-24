@@ -5,7 +5,7 @@ import { AuthGuard } from './shared/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'upload-docs',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -22,12 +22,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'upload-docs',
+    path: 'upload-docs/:userId',
     loadChildren: () => import('./pages/auth/upload-docs/upload-docs.module').then( m => m.UploadDocsPageModule)
   },
   {
     path: 'otp-modal',
     loadChildren: () => import('./modal/otp-modal/otp-modal.module').then( m => m.OtpModalPageModule)
+  },
+  {
+    path: 'success-modal',
+    loadChildren: () => import('./modal/success-modal/success-modal.module').then( m => m.SuccessModalPageModule)
   }
 ];
 

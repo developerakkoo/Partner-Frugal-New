@@ -57,9 +57,9 @@ else {
     let formdata = new FormData();
     formdata.append("partnerId", partnerId);
     formdata.append("documentType", documentType);
-    formdata.append("document", document, document.name);
+    formdata.append("file", document, document.name);
 
-    return this.http.post(environment.API_URL + `/app/v1/upload-document/parnter`, formdata);
+    return this.http.post(environment.API_URL + `/app/v1/upload-document/partner`, formdata);
   }
 
   sendOtpPartner(phoneNumber:string){

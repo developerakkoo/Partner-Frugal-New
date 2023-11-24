@@ -8,6 +8,7 @@ import { UploadDocsPageRoutingModule } from './upload-docs-routing.module';
 
 import { UploadDocsPage } from './upload-docs.page';
 import { FileDragnDropDirective } from 'src/app/file-dragn-drop.directive';
+import { ProgressComponent } from 'src/app/components/progress/progress.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { FileDragnDropDirective } from 'src/app/file-dragn-drop.directive';
     IonicModule,
     UploadDocsPageRoutingModule
   ],
-  declarations: [UploadDocsPage]
+  declarations: [UploadDocsPage, ProgressComponent]
 })
 export class UploadDocsPageModule {}
