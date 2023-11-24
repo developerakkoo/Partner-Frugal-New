@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'upload-docs',
     pathMatch: 'full'
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -22,6 +24,10 @@ const routes: Routes = [
   {
     path: 'upload-docs',
     loadChildren: () => import('./pages/auth/upload-docs/upload-docs.module').then( m => m.UploadDocsPageModule)
+  },
+  {
+    path: 'otp-modal',
+    loadChildren: () => import('./modal/otp-modal/otp-modal.module').then( m => m.OtpModalPageModule)
   }
 ];
 

@@ -1,36 +1,43 @@
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" >
 
+  <div class="logo">
+    <h1>F</h1>
+  </div>
+<div class="main">
   <ion-grid class="grid">
     <ion-row>
-      <ion-col size="8">
+      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeInLeft">
         <ion-text color="primary" class="ion-text-center">
-          <h1>Hi! Welcome again.</h1>
+          <h1 class="heading">Hi! Welcome again.</h1>
         </ion-text>
         <img src="./assets/Frugal-bg.svg" alt="" srcset="">
       </ion-col>
-      <ion-col size="4">
+
+
+      <ion-col sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeInRight">
         <ion-text color="primary">
-          <h1>Sign in to Frugal</h1>
-          <p> <strong>New User? </strong>Create and account. </p>
+          <h1 class="sub-heading">Sign in to Frugal</h1>
+          <p [routerLink]="['/register']" routerLinkActive="router-link-active" > <strong>New User? </strong>Create and account. </p>
         </ion-text>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           
             <ion-input formControlName="email" errorText="Enter a valid email." label="Enter Email/Mobile no" label-placement="floating" fill="outline" placeholder="Enter text"></ion-input>
             <br>
             <ion-input formControlName="password" errorText="Password must be 10 characters long." label="Enter password" label-placement="floating" fill="outline" placeholder="Enter text"></ion-input>
-            <ion-item fill="clear">
-              <ion-toggle mode="ios" justify="space-between">Keep me logged in.</ion-toggle>
+            <ion-item lines="none" fill="clear">
+              <ion-toggle formControlName="keepLoggedIn" (ionChange)="keepLoggedInEvent($event)" mode="ios" justify="space-between">Keep me logged in.</ion-toggle>
             </ion-item>
           
             <ion-button mode="ios" expand="block" color="primary" type="submit" [disabled]="loginForm.invalid">
             Login
           </ion-button>
           <ion-text color="primary" class="ion-text-end">
-            <p>Forgot password?</p>
+            <p class="forgot-password">Forgot password?</p>
           </ion-text>
         </form>
       </ion-col>
     </ion-row>
   </ion-grid>
+</div>
 </ion-content>

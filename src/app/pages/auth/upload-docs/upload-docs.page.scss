@@ -1,0 +1,157 @@
+.grid{
+    margin-top: 150px;
+}
+
+ion-item{
+    --background:#F4F2FF
+}
+
+.heading{
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 2vw;
+}
+
+.sub-heading{
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 1.5vw;
+}
+
+ion-content{
+    --background:#F4F2FF;
+   
+    font-family: 'Roboto';
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    padding-right: 12vw;
+    padding-left: 12vw;
+}
+
+.logo{
+    background-color: #7B61FF;
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 1vw;
+    left: 1vw;
+    color: #fff;
+}
+ion-text .forgot-password{
+    text-decoration: underline;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+
+.drop-zone{
+    height: 12vw;
+    min-height: 200px;
+    width: 400px;
+    padding: 20px;
+    border: 2px dashed #6750A4;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.drop-zone ion-icon{
+    font-size: 60px;
+}
+
+
+.drop-zone p{
+    color: #6750A4;
+    font-size: 15px;
+}
+
+
+.drop-zone:hover{
+    height: 12vw;
+    min-height: 200px;
+    width: 400px;
+    padding: 20px;
+    border: 2px dashed black;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #fff;
+    color: black;
+    cursor: pointer;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  .custom-file-input::before {
+    content: 'Choose file';
+    display: block;
+    background: #6750A4;
+    color: #fff;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 8px 10px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 22px;
+  }
+  .custom-file-input:hover::before {
+    border-color: #6750A4;
+  }
+  .custom-file-input:active::before {
+    background: #6750A4;
+  }
+
+
+  .progress-upload-div{
+    width: 400px;
+    height: 80px;
+    border: 1px solid #6750A4;
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .left-div{
+    height: 50px;
+    width: 50px;
+    background-color: #6750A4;
+    border-radius: 50%;
+
+
+  }
+.left-div-main{
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    align-items: center;
+}
+  .right-div ion-icon{
+    font-size: 30px;    
+  }
+
+  ion-button{
+    margin-top: 50px;
+    width: 400px;
+  }
+

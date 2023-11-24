@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="logo">
+    <h1>F</h1>
+  </div>
+<div class="main">
+  <ion-grid class="grid">
+    <ion-row>
+      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12">
+        <ion-text color="primary" class="ion-text-center">
+          <h1 class="heading">Manage your vehicles at one place.</h1>
+        </ion-text>
+        <img src="./assets/Frugal-bg.svg" alt="" srcset="">
+      </ion-col>
+      <ion-col *ngIf="!isRegistrationSuccess" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12">
+        <ion-text color="primary">
+          <h1 class="sub-heading">Create an Account</h1>
+          <p [routerLink]="['/login']" routerLinkActive="router-link-active" > <strong>Already a  User? </strong>Click here.</p>
+        </ion-text>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          
+            <ion-input formControlName="primaryPhoneNumber" errorText="Enter a valid contact no." label="Contact no" label-placement="stacked" fill="outline" placeholder="Enter Contact no"></ion-input>
+            <br>
+            <ion-input formControlName="password" errorText="Password must be 10 characters long." label="Password" label-placement="stacked" fill="outline" placeholder="Enter Password"></ion-input>
+            <br>
+            <ion-input formControlName="cpassword" errorText="Password must be 10 characters long." label="Confirm Password" label-placement="stacked" fill="outline" placeholder="Enter Confirm Password"></ion-input>
+            
+         
+                <ion-list>
+              
+              
+                  <ion-radio-group formControlName="documentType" value="space-between" (ionChange)="gstSelectionEvent($event)">
+                    <ion-item lines="none">
+                      <ion-radio value="1" justify="space-between">I have GST</ion-radio>
+                    </ion-item>
+                    <ion-item lines="none">
+                      <ion-radio value="2" justify="space-between">I don't have GST</ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-list>
+          
+            
+            
+            <ion-input type="text" *ngIf="iHaveGst" [maskito]="gstMask" [maskitoElement]="maskPredicate" formControlName="documentNumber" errorText="GST must be 15 characters long." label="GST" label-placement="stacked" fill="outline" placeholder="0000-0000-0000-000"></ion-input>
+            <ion-input type="text" *ngIf="!iHaveGst" [maskito]="panMask" [maskitoElement]="maskPredicate" formControlName="documentNumber" errorText="PAN must be 10 characters long." label="PAN" label-placement="stacked" fill="outline" placeholder="00000-00000"></ion-input>
+           
+          
+            <ion-button mode="ios" expand="block" color="primary" type="submit" [disabled]="registerForm.invalid">
+            Continue
+          </ion-button>
+       
+        </form>
+      </ion-col>
+
+
+      <ion-col *ngIf="isRegistrationSuccess" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12">
+        <ion-text color="primary">
+          <h1 class="sub-heading">Add Email</h1>
+        </ion-text>
+        <form class="email-form" [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()">
+          
+            <ion-input formControlName="email" errorText="Enter a valid email" label="Email(Optional)" label-placement="stacked" fill="outline" placeholder="Enter email"></ion-input>
+          
+         
+           
+            
+          <ion-buttons class="ion-margin-top" slot="start">
+            <ion-button class="continue-button" mode="ios" fill="solid" expand="block" color="primary" type="submit" [disabled]="emailForm.invalid">
+              Continue
+            </ion-button>
+
+            <ion-button class="skip-button" mode="ios" fill="solid"  expand="block" color="secondary" type="submit" [disabled]="emailForm.invalid">
+              Skip
+            </ion-button>
+          </ion-buttons>
+            
+       
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
 </ion-content>

@@ -1,13 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>upload-docs</ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">upload-docs</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ 
+<ion-content [fullscreen]="true">
+
+  <div class="logo">
+    <h1>F</h1>
+  </div>
+<div class="main">
+  <ion-grid class="grid">
+    <ion-row>
+      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12">
+        <ion-text color="primary" class="ion-text-center">
+          <h1 class="heading">Your documents are safe with us.</h1>
+        </ion-text>
+        <img src="./assets/Frugal-bg.svg" alt="" srcset="">
+      </ion-col>
+      <ion-col sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12">
+        <ion-text color="primary">
+          <h1 class="sub-heading">Choose your Id proof</h1>
+          <p> Only jpg, png, jpeg file formats are supported. </p>
+        </ion-text>
+        <div class="drop-zone" >
+          <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+          <p color="primary">Drag or Drop your file here</p>
+          <br>
+          <input style="width: 140px; height:50px;" class="custom-file-input" type="file" name="file" id="file" (change)="onFileChange($event)">
+        </div>
+
+        <div class="progress-upload-div">
+          <div class="left-div-main">
+            <div class="left-div">
+
+            </div>
+            <div class="center-div">
+              <h5>Uploading...</h5>
+              <p>75%</p>
+            </div>
+  
+          </div>
+          <div class="right-div">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </div>
+        </div>
+        <ion-button mode="ios" expand="block" color="primary" type="submit" (click)="submitOtp()">
+          Send OTP
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
 </ion-content>
+

@@ -1,0 +1,74 @@
+.grid{
+    margin-top: 150px;
+}
+
+ion-item{
+    --background:#F4F2FF
+}
+
+.heading{
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 2vw;
+}
+
+.sub-heading{
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 1.5vw;
+}
+
+ion-content{
+    --background:#F4F2FF;
+   
+    font-family: 'Roboto';
+}
+
+ion-list{
+    background-color: #F4F2FF;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    padding-right: 12vw;
+    padding-left: 12vw;
+}
+
+.logo{
+    background-color: #7B61FF;
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 1vw;
+    left: 1vw;
+    color: #fff;
+}
+ion-text .forgot-password{
+    text-decoration: underline;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.email-form{
+    margin-top: 6vw;
+}
+
+.continue-button{
+    width: 155px;
+height: 50px;
+background-color: #6750A4;
+color: #fff;
+border-radius: 12px;
+}
+
+.skip-button{
+    width: 155px;
+height: 50px;
+background-color: #7B61FF;
+color: #fff;
+border-radius: 12px;
+}
