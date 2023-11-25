@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonModal, MenuController } from '@ionic/angular';
+import { NgxSpinnerService, Spinner } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -13,12 +14,21 @@ import { StorageService } from 'src/app/services/storage.service';
 export class LoginPage implements OnInit {
 
   loginForm:FormGroup;
+  resetLinkForm:FormGroup;
   keepMeLoggedInStatus:boolean = false;
+  isShareOnMail:boolean = true;
+
+  @ViewChild(IonModal) modal!: IonModal;
+
+
+  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name!: string;
 
   constructor(private menuController: MenuController,
               private formBuilder: FormBuilder,
               private router: Router,
               private service:AuthService,
+              private spinner: NgxSpinnerService,
               private storage: StorageService) { 
     this.menuController.enable(false);
     this.loginForm = this.formBuilder.group({
@@ -26,10 +36,21 @@ export class LoginPage implements OnInit {
       keepLoggedIn:[false],
       password:[,[Validators.required, Validators.minLength(6)]]
     })
+
+    this.resetLinkForm = this.formBuilder.group({
+      email:[,[Validators.email]],
+      mobile:[,[Validators.minLength(10)]]
+    })
   }
 
   async ngOnInit() {
-  
+    // /** spinner starts on init */
+    // this.spinner.show();
+
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //   this.spinner.hide();
+    // }, 5000);
   }
 
   ionViewDidEnter(){
@@ -74,8 +95,20 @@ export class LoginPage implements OnInit {
     }
   }
 
-  onForgotPassword(){
-
+  onSubmitResetLink(){
+    console.log("Submit reset link");
+    
+    this.service.sendResetLinkEmail(this.resetLinkForm.value.email)
+    .subscribe({
+      next:(value:any) =>{
+        console.log(value);
+        
+      },
+      error:(error:Error) =>{
+        console.log(error);
+        
+      }
+    })
   }
 
   async keepLoggedInEvent(ev:any){
@@ -86,14 +119,10 @@ export class LoginPage implements OnInit {
   }
 
   goToRegisterPage(){
-    this.router.navigate(['register'])
+    this.router.navigate(['register']);
   }
 
 
-  @ViewChild(IonModal) modal!: IonModal;
-
-  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  name!: string;
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -108,5 +137,17 @@ export class LoginPage implements OnInit {
     if (ev.detail.role === 'confirm') {
       this.message = `Hello, ${ev.detail.data}!`;
     }
+  }
+
+  radioLinkShareEvent(ev:any){
+    console.log(ev.detail.value);
+    if(ev.detail.value == "number")
+{
+  this.isShareOnMail = false;
+}    
+
+if(ev.detail.value == "email"){
+  this.isShareOnMail = true;
+}
   }
 }

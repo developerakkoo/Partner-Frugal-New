@@ -53,5 +53,10 @@ ion-text .forgot-password{
 
 ion-modal{
     --border-radius: 10px;
-    --height: 200px;
+    --height: 400px;
+    --width:400px;
+}
+
+ion-modal ion-button{
+    margin-top: 40px;
 }

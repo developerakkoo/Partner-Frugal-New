@@ -7,13 +7,13 @@
 <div class="main">
   <ion-grid class="grid">
     <ion-row>
-      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeIn">
         <ion-text color="primary" class="ion-text-center">
           <h1 class="heading">Manage your vehicles at one place.</h1>
         </ion-text>
         <img src="./assets/Frugal-bg.svg" alt="" srcset="">
       </ion-col>
-      <ion-col *ngIf="!isRegistrationSuccess" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-col *ngIf="!isRegistrationSuccess" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeIn">
         <ion-text color="primary">
           <h1 class="sub-heading">Create an Account</h1>
           <p [routerLink]="['/login']" routerLinkActive="router-link-active" > <strong>Already a  User? </strong>Click here.</p>
@@ -54,7 +54,7 @@
       </ion-col>
 
 
-      <ion-col *ngIf="isRegistrationSuccess" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-col *ngIf="isRegistrationSuccess" sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeIn">
         <ion-text color="primary">
           <h1 class="sub-heading">Add Email</h1>
         </ion-text>

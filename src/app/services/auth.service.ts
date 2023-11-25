@@ -52,6 +52,17 @@ else {
   }
   
 
+  sendResetLinkEmail(email:string){
+    return this.http.post(environment.API_URL + `/app/v1/generate/reset-password-link`,{
+      "email":email
+    })
+  }
+
+  sendResetLinkMobile(email:string){
+    return this.http.post(environment.API_URL + `/app/v1/generate/reset-password-link`,{
+      "phoneNumber":email
+    })
+  }
 
   uploadDocumentPartner(partnerId:string, documentType:string, document:File){
     let formdata = new FormData();

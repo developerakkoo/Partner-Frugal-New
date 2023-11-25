@@ -1,13 +1,16 @@
 
+<ngx-spinner bdColor="rgba(0, 0, 10, 0.7)"
+size="medium"
+color="#fff22" fullscreen="true" type="ball-scale-multiple"></ngx-spinner>
 <ion-content [fullscreen]="true" >
-
+  
   <div class="logo">
     <h1>F</h1>
   </div>
 <div class="main">
   <ion-grid class="grid">
     <ion-row>
-      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeInLeft">
+      <ion-col sizeLg="8" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeIn">
         <ion-text color="primary" class="ion-text-center">
           <h1 class="heading">Hi! Welcome again.</h1>
         </ion-text>
@@ -15,7 +18,7 @@
       </ion-col>
 
 
-      <ion-col sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeInRight">
+      <ion-col sizeLg="4" sizeMd="12" sizeSm="12" sizeXs="12" class="animate__animated animate__fadeIn">
         <ion-text color="primary">
           <h1 class="sub-heading">Sign in to Frugal</h1>
           <p [routerLink]="['/register']" routerLinkActive="router-link-active" > <strong>New User? </strong>Create and account. </p>
@@ -50,13 +53,10 @@
           <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
         <ion-title>Forgot Password?</ion-title>
-        <!-- <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-        </ion-buttons> -->
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-radio-group value="email">
+      <ion-radio-group value="email" (ionChange)="radioLinkShareEvent($event)">
         <ion-item>
           <ion-radio value="email" justify="space-between">Share link with Email address</ion-radio>
         </ion-item>
@@ -64,6 +64,22 @@
         <ion-item>
           <ion-radio value="number" justify="space-between">Share link with Contact no</ion-radio>
         </ion-item>
+        <br>
+        <br>
+        
+
+        <form [formGroup]="resetLinkForm" (ngSubmit)="onSubmitResetLink()">
+            <ion-input *ngIf="isShareOnMail"  formControlName="email" errorText="Enter a valid email." label="Enter Email" label-placement="floating" fill="outline" placeholder="Enter email"></ion-input>
+
+            <ion-input *ngIf="!isShareOnMail" formControlName="mobile"  errorText="Enter a valid Phone number." label="Enter Mobile no" label-placement="floating" fill="outline" placeholder="Enter mobile phone"></ion-input>
+
+            <ion-button mode="ios" expand="block" color="primary" type="submit" [disabled]="resetLinkForm.invalid">
+              Send verification link
+            </ion-button>
+        </form>
+
+      
+
       
       </ion-radio-group>
     </ion-content>
