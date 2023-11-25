@@ -30,4 +30,19 @@
     font-family: 'Roboto', sans-serif;
 }
 
+ion-toast.custom-toast {
+    --background: #89ff6e;
+    --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+    --color: #4b4a50;
+  }
+  
+  ion-toast.custom-toast::part(message) {
+    font-style: bold;
+  }
+  
+  ion-toast.custom-toast::part(button) {
+    border-left: 1px solid #d2d2d2;
+    color: #030207;
+    font-size: 15px;
+  }
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,700;1,700&family=Lato:wght@300;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');

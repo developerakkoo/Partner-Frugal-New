@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { LoadingController, MenuController, ToastController } from '@ionic/angular';
 import { MaskitoOptions, MaskitoElementPredicateAsync } from '@maskito/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -49,6 +49,8 @@ export class RegisterPage implements OnInit {
     private menuController: MenuController,
     private router: Router,
     private storage: StorageService,
+    private toastController: ToastController,
+    private loadingController: LoadingController,
     private service: AuthService) {
       this.menuController.enable(false);
 
@@ -93,8 +95,27 @@ export class RegisterPage implements OnInit {
 
   }
 
+  async presentToast(msg:string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration:1000,
+      position:'top'
+    });
+    toast.present();
+  }
+
+
+  async presentLoading(msg:string) {
+    const loading = await this.loadingController.create({
+      message: msg,
+    
+    });
+    await loading.present();
+  }
+
   onSubmit(){
     if(this.registerForm.valid){
+      this.presentLoading("Signing up...")
       console.log(this.registerForm.value);
       // this.isRegistrationSuccess = true;
       this.service.registerPartner(
@@ -111,11 +132,14 @@ export class RegisterPage implements OnInit {
         await this.storage.set("phoneNumber",this.registerForm.value.primaryPhoneNumber)
           await this.storage.set("registerStep", "1")
           this.isRegistrationSuccess = true;
+          this.loadingController.dismiss();
+          this.presentToast("Registration completed successfully.")
         },
         error:(error:Error) =>{
           console.log(error);
           this.isRegistrationSuccess = false;
-          
+          this.loadingController.dismiss();
+          this.presentToast(error.message);
         }
       })
     }
@@ -125,18 +149,25 @@ export class RegisterPage implements OnInit {
   skip(){
     this.router.navigate(['upload-docs', this.userId]);
   }
+
+
   async onSubmitEmail(){
     if(this.emailForm.valid){
+      this.presentLoading("Registering email address...")
       console.log(this.emailForm.value);
       this.service.addEmailPartner(this.emailForm.value.email, this.userId)
       .subscribe({
         next:async (value:any) =>{
           console.log(value);
           await this.storage.set("registerStep", "2")
+          this.loadingController.dismiss();
+          this.presentToast("Email added successfully.")
           this.router.navigate(['upload-docs', this.userId]);
         },
         error:(error:Error) =>{
           console.log(error);
+          this.loadingController.dismiss();
+          this.presentToast(error.message);
           
         }
       })

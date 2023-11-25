@@ -1,6 +1,6 @@
 
 
-<ion-content [fullscreen]="true">
+
  
 <ion-content [fullscreen]="true">
 
@@ -157,7 +157,7 @@
             </div>
             <div class="center-div">
               <h5>Uploaded Pan card.</h5>
-              <ion-progress-bar [value]="progress"></ion-progress-bar>
+              <ion-progress-bar max="100" [value]="progress"></ion-progress-bar>
 
             </div>
   
@@ -193,5 +193,34 @@
     </ion-row>
   </ion-grid>
 </div>
+
+
+<ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+  <ng-template> 
+   
+    <ion-content>
+      
+      <div class="main">
+        <div class="text-div">
+          <h1>Verify your contact details!</h1>
+          <p>Please enter OTP sent on your registerd contact number</p>
+          <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
+          <ion-button class="verify-button" mode="ios" expand="block" color="primary" (click)="verifyOtp()">
+            Verify
+          </ion-button>
+          <ion-text color="primary" (click)="resendOtp()">
+            <p>Resend OTP in 00: {{timer}} ?</p>
+
+          </ion-text>
+        </div>
+       </div>
+
+      
+
+      
+    
+    </ion-content>
+  </ng-template>
+</ion-modal>
 </ion-content>
 

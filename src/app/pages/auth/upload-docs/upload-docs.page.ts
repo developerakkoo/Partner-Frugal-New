@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController, ModalController } from '@ionic/angular';
+import { IonModal, LoadingController, MenuController, ModalController, ToastController } from '@ionic/angular';
 import { OtpModalPage } from 'src/app/modal/otp-modal/otp-modal.page';
 import { SuccessModalPage } from 'src/app/modal/success-modal/success-modal.page';
 import { AuthService } from 'src/app/services/auth.service';
@@ -23,9 +23,26 @@ export class UploadDocsPage implements OnInit {
   isAdharUploaded:boolean = false;
   progress:number = 0;
   progressAdhar:number = 0;
+  isModalOpen = false;
+
+  mobileNumber:any;
+
+  OtpValue:any;
+  submitted = false;
+  timer = 60;
+  timerColor = "danger";
+  timerInterval:any;
+  @ViewChild(IonModal) modal!: IonModal;
+
+
+  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name!: string;
+
   constructor(private menuController: MenuController,
               private router: Router,
               private route: ActivatedRoute,
+              private loadingController: LoadingController,
+              private toastController: ToastController,
               private modalController: ModalController,
               private service:AuthService,
               private storage: StorageService,
@@ -38,9 +55,34 @@ export class UploadDocsPage implements OnInit {
                 
                }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.mobileNumber = await this.storage.get("phoneNumber");
+    this.startTimer();
   }
 
+
+  startTimer(){
+
+    this.timerInterval = setInterval(() =>{
+      this.timer = this.timer - 1;
+      if(this.timer == 30){
+        this.timerColor = "warning";
+
+      }
+      if(this.timer == 0){
+        this.timer = 0o0;
+        this.timerColor = "success";
+        clearInterval(this.timerInterval);
+        return;
+      }
+    }, 1000)
+  }
+
+  resendOtp(){
+    this.timer = 60
+    this.timerColor = "danger";
+    this.startTimer();
+  }
 /**
    * on file drop handler
    */
@@ -129,6 +171,24 @@ formatBytes(bytes:any, decimals:any) {
 }
 
 
+async presentToast(msg:string) {
+  const toast = await this.toastController.create({
+    message: msg,
+    duration:1000,
+    position:'top'
+  });
+  toast.present();
+}
+
+
+async presentLoading(msg:string) {
+  const loading = await this.loadingController.create({
+    message: msg,
+ 
+
+  });
+  await loading.present();
+}
   onFileChange(pFileList: any, documentType:any){
     console.log(pFileList.target.files[0]);
     if(documentType == "1"){
@@ -140,11 +200,13 @@ formatBytes(bytes:any, decimals:any) {
         console.log(value);
         this.isPanUploaded = true;
         this.progress = 100;
+      
       },
-      error:(error:Error) =>{
+      error:(error:any) =>{
         console.log(error);
         this.isPanUploaded = false;
         this.progress = 0;
+        this.presentToast(error.error.message)
         
       }
     })
@@ -160,10 +222,11 @@ formatBytes(bytes:any, decimals:any) {
       this.progressAdhar = 100;
 
       },
-      error:(error:Error) =>{
+      error:(error:any) =>{
         console.log(error);
         this.isAdharUploaded = false;
       this.progressAdhar = 0;
+      this.presentToast(error.error.message)
 
         
       }
@@ -182,6 +245,9 @@ formatBytes(bytes:any, decimals:any) {
   //   this.files.splice(index, 1);
   // }
 
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   async presentModal() {
     let number = await this.storage.get("phoneNumber");
@@ -202,6 +268,60 @@ formatBytes(bytes:any, decimals:any) {
   }
 
   submitOtp(){
-    this.presentModal();
+  this.setOpen(true);
+  this.service.sendOtpPartner(this.mobileNumber)
+  .subscribe({
+    next:(value:any) =>{
+      console.log(value);
+      this.loadingController.dismiss();
+      this.presentToast("OTP send Successfully.")
+    },
+    error:(error:Error) =>{
+      console.log(error);
+      this.presentToast(error.message);
+    }
+  })
+  }
+
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(this.name, 'confirm');
+  }
+
+  onOtpChange(ev:any){
+    console.log(ev);
+    this.OtpValue = ev;
+    console.log(this.OtpValue);
+    
+    
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<any>;
+    if (ev.detail.role === 'confirm') {
+      this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
+
+  verifyOtp(){
+    this.presentLoading("Verifying OTP...")
+    this.service.verifyOtpPartner(this.mobileNumber, this.OtpValue)
+    .subscribe({
+      next:(value:any) =>{
+        console.log(value);
+        this.modalController.dismiss();
+        this.loadingController.dismiss();
+        this.presentModal();
+      },
+      error:(error:any) =>{
+        console.log(error);
+        this.presentToast(error.message);
+        
+      }
+    })
   }
 }

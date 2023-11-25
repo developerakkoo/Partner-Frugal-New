@@ -9,6 +9,7 @@ import { UploadDocsPageRoutingModule } from './upload-docs-routing.module';
 import { UploadDocsPage } from './upload-docs.page';
 import { FileDragnDropDirective } from 'src/app/file-dragn-drop.directive';
 import { ProgressComponent } from 'src/app/components/progress/progress.component';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ProgressComponent } from 'src/app/components/progress/progress.componen
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    NgOtpInputModule,
     UploadDocsPageRoutingModule
   ],
   declarations: [UploadDocsPage, ProgressComponent]

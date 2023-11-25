@@ -18,20 +18,14 @@ export class AuthService {
 
   loginPartner(userId:string, password:string, isEmail:boolean){
 
-    if(isEmail){
+
       return this.http.post(environment.API_URL + '/app/v1/login/partner',
       {
-        "email":userId,
+        "data":userId,
         "password":password
       });
-    }
-else {
-  return this.http.post(environment.API_URL + '/app/v1/login/partner',
-      {
-        "phoneNumber":userId,
-        "password":password
-      });
-}
+  
+
    
   }
 

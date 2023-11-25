@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { SuccessModalPage } from '../success-modal/success-modal.page';
@@ -16,40 +16,62 @@ export class OtpModalPage implements OnInit {
 
   constructor(private modalController: ModalController,
               private service: AuthService,
+              private toastController: ToastController,
+              private loadingController: LoadingController,
               private storage: StorageService) { }
 
   ngOnInit() {
     console.log(this.value);
-    
   }
 
   ionViewDidEnter(){
+    this.presentLoading("Sending OTP to your mobile number.")
     this.service.sendOtpPartner(this.value)
     .subscribe({
       next:(value:any) =>{
         console.log(value);
-        
+        this.loadingController.dismiss();
+        this.presentToast("OTP send Successfully.")
       },
       error:(error:Error) =>{
         console.log(error);
-        
+        this.presentToast(error.message);
       }
     })
+  }
+
+  async presentToast(msg:string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration:1000
+    });
+    toast.present();
+  }
+  
+  
+  async presentLoading(msg:string) {
+    const loading = await this.loadingController.create({
+      message: msg,
+    });
+    await loading.present();
   }
   dismiss(){
     this.modalController.dismiss("verified","cancel");
   }
 
   verifyOtp(){
+    this.presentLoading("Verifying OTP...")
     this.service.verifyOtpPartner(this.value, this.OtpValue)
     .subscribe({
       next:(value:any) =>{
         console.log(value);
         this.modalController.dismiss();
+        this.loadingController.dismiss();
         this.presentModal();
       },
       error:(error:any) =>{
         console.log(error);
+        this.presentToast(error.message);
         
       }
     })

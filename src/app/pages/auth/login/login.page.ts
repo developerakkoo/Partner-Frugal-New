@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonModal, MenuController } from '@ionic/angular';
+import { IonModal, LoadingController, MenuController, ToastController } from '@ionic/angular';
 import { NgxSpinnerService, Spinner } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -29,6 +29,8 @@ export class LoginPage implements OnInit {
               private router: Router,
               private service:AuthService,
               private spinner: NgxSpinnerService,
+              private loadingController: LoadingController,
+              private toastController: ToastController,
               private storage: StorageService) { 
     this.menuController.enable(false);
     this.loginForm = this.formBuilder.group({
@@ -73,22 +75,44 @@ export class LoginPage implements OnInit {
   }
 
 
+  async presentToast(msg:string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration:1000,
+      position:'top'
+    });
+    toast.present();
+  }
+
+
+  async presentLoading(msg:string) {
+    const loading = await this.loadingController.create({
+      message: msg,
+    
+    });
+    await loading.present();
+  }
   async onSubmit(){
     if(this.loginForm.valid){
+      this.presentLoading("Signing in...");
       console.log(this.loginForm.value);
       this.service.loginPartner(this.loginForm.value.email, this.loginForm.value.password, false)
       ?.subscribe({
         next:async (value:any) =>{
           console.log(value);
+          this.loadingController.dismiss();
           let token = value['data']['accessToken'];
           let userId = value['data']['userId'];
           
           let message = value['message'];
           await this.storage.set("accessToken", token);
           await this.storage.set("userId", userId);
+          this.presentToast("You have successfully Logged In!");
         },
         error:(error:Error) =>{
           console.log(error.message);
+          this.presentToast(error.message);
+          this.loadingController.dismiss();
           
         }
       })
